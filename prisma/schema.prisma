@@ -15,5 +15,6 @@ model Scores {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   userId      String 
+  userName     String 
   score Int
 }

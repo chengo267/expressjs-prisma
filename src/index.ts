@@ -23,31 +23,13 @@ app.post("/scores", async (req, res) => {
     data: {
       createdAt: new Date(),
       userId: req.body.userId ?? "Empty userId",
+      userName: req.body.userName ?? "Empty userName",
       score: req.body.score ?? 0,
     },
   });
 
   return res.json(score);
 });
-
-// app.get("/todos/:id", async (req, res) => {
-//   const id = req.params.id;
-//   const todo = await prisma.todo.findUnique({
-//     where: { id },
-//   });
-
-//   return res.json(todo);
-// });
-
-// app.put("/todos/:id", async (req, res) => {
-//   const id = req.params.id;
-//   const todo = await prisma.todo.update({
-//     where: { id },
-//     data: req.body,
-//   });
-
-//   return res.json(todo);
-// });
 
 app.delete("/scores/:id", async (req, res) => {
   const id = req.params.id;
@@ -57,19 +39,6 @@ app.delete("/scores/:id", async (req, res) => {
 
   return res.send({ status: "ok" });
 });
-
-// app.get("/", async (req, res) => {
-//   res.send(
-//     `
-//   <h1>Todo REST API</h1>
-//   <h2>Available Routes</h2>
-//   <pre>
-//     GET, POST /todos
-//     GET, PUT, DELETE /todos/:id
-//   </pre>
-//   `.trim(),
-//   );
-// });
 
 app.listen(Number(port), "0.0.0.0", () => {
     console.log(`Example app listening at http://localhost:${port}`);
