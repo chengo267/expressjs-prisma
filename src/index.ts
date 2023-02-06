@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '../node_modules/.prisma/client';
 import express from "express";
 
 const prisma = new PrismaClient();
@@ -10,66 +10,66 @@ app.use(express.json());
 app.use(express.raw({ type: "application/vnd.custom-type" }));
 app.use(express.text({ type: "text/html" }));
 
-app.get("/todos", async (req, res) => {
-  const todos = await prisma.todo.findMany({
-    orderBy: { createdAt: "desc" },
+app.get("/scores", async (req, res) => {
+  const scores = await prisma.scores.findMany({
+    orderBy: { score: "desc" },
   });
 
-  res.json(todos);
+  res.json(scores);
 });
 
-app.post("/todos", async (req, res) => {
-  const todo = await prisma.todo.create({
+app.post("/scores", async (req, res) => {
+  const score = await prisma.scores.create({
     data: {
-      completed: false,
       createdAt: new Date(),
-      text: req.body.text ?? "Empty todo",
+      userId: req.body.userId ?? "Empty userId",
+      score: req.body.score ?? 0,
     },
   });
 
-  return res.json(todo);
+  return res.json(score);
 });
 
-app.get("/todos/:id", async (req, res) => {
+// app.get("/todos/:id", async (req, res) => {
+//   const id = req.params.id;
+//   const todo = await prisma.todo.findUnique({
+//     where: { id },
+//   });
+
+//   return res.json(todo);
+// });
+
+// app.put("/todos/:id", async (req, res) => {
+//   const id = req.params.id;
+//   const todo = await prisma.todo.update({
+//     where: { id },
+//     data: req.body,
+//   });
+
+//   return res.json(todo);
+// });
+
+app.delete("/scores/:id", async (req, res) => {
   const id = req.params.id;
-  const todo = await prisma.todo.findUnique({
-    where: { id },
-  });
-
-  return res.json(todo);
-});
-
-app.put("/todos/:id", async (req, res) => {
-  const id = req.params.id;
-  const todo = await prisma.todo.update({
-    where: { id },
-    data: req.body,
-  });
-
-  return res.json(todo);
-});
-
-app.delete("/todos/:id", async (req, res) => {
-  const id = req.params.id;
-  await prisma.todo.delete({
+  await prisma.scores.delete({
     where: { id },
   });
 
   return res.send({ status: "ok" });
 });
 
-app.get("/", async (req, res) => {
-  res.send(
-    `
-  <h1>Todo REST API</h1>
-  <h2>Available Routes</h2>
-  <pre>
-    GET, POST /todos
-    GET, PUT, DELETE /todos/:id
-  </pre>
-  `.trim(),
-  );
-});
+// app.get("/", async (req, res) => {
+//   res.send(
+//     `
+//   <h1>Todo REST API</h1>
+//   <h2>Available Routes</h2>
+//   <pre>
+//     GET, POST /todos
+//     GET, PUT, DELETE /todos/:id
+//   </pre>
+//   `.trim(),
+//   );
+// });
 
 app.listen(Number(port), "0.0.0.0", () => {
     console.log(`Example app listening at http://localhost:${port}`);

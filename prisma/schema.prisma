@@ -8,11 +8,12 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  output = "../node_modules/.prisma/client"
 }
 
-model Todo {
+model Scores {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
-  text      String
-  completed Boolean
+  userId      String 
+  score Int
 }

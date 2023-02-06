@@ -1,9 +1,9 @@
 -- CreateTable
-CREATE TABLE "Todo" (
+CREATE TABLE "Scores" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "text" TEXT NOT NULL,
-    "completed" BOOLEAN NOT NULL,
+    "userId" TEXT NOT NULL,
+    "score" INT NOT NULL,
 
     PRIMARY KEY ("id")
 );
